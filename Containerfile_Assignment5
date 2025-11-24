@@ -1,0 +1,17 @@
+# Use the latest Fedora image
+FROM fedora:latest
+
+# Update system and install required packages
+RUN dnf -y upgrade && \
+    dnf -y install httpd && \
+    dnf clean all
+
+
+# Copy data into /var/www/html/data
+COPY data /var/www/html/data
+
+# Expose port 80
+EXPOSE 80
+
+# Enable httpd service and start it in foreground
+CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]
